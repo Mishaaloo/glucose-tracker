@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+
+<style>
+</style>
+
+<div class="container mt-5 login-card">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card p-4 shadow">
+
+<div class="container mt-4">
+    <h2>Create an Account</h2>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form action="/register" method="post">
+        <div class="form-group">
+            <label>Username:</label>
+            <input type="text" class="form-control" name="nm" required/>
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" class="form-control" name="pw" required/>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+        <a href="{{ url_for('login') }}" class="btn btn-link">Already have an account? Login</a>
+    </form>
+</div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="alert" style="background-color: #0a3d62; border-left: 4px solid #64ffda; color: #e0e0e0; border-radius: 8px; padding: 20px;">
+                💡 <strong>Did you know?</strong> {{ tip }}
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

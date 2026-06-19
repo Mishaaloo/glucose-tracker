@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4 shadow">
+                <h3 class="mb-4" style="color: #64ffda;">Log a Reading</h3>
+                <form action="/log" method="POST">
+                    <div class="form-group">
+                        <label>Glucose Reading (mg/dL)</label>
+                        <input type="number" class="form-control bg-dark text-light border-secondary" name="glucose" placeholder="Enter BG reading" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Did you test just now?</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="test_now" value="yes" checked onclick="toggleTimeBox(false)">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="test_now" value="no" onclick="toggleTimeBox(true)">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </div>
+                    <div id="time_box_container" class="form-group hidden">
+                        <label>When did you test?</label>
+                        <input type="datetime-local" class="form-control bg-dark text-light border-secondary" name="test_time" id="test_time">
+                    </div>
+                    <div class="form-group">
+                        <label>Insulin Type</label>
+                        <select class="form-control bg-dark text-light border-secondary" name="insulin_type">
+                            <option value="basal">Basal</option>
+                            <option value="bolus">Bolus</option>
+                            <option value="Fasting">Fasting</option>
+                            <option value="None">None</option>
+                            <option value="After a physical activity">After a physical activity</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Insulin Units</label>
+                        <input type="number" class="form-control bg-dark text-light border-secondary" name="insulin_units" placeholder="How many units">
+                    </div>
+                    <div class="form-group">
+                        <label>What did you eat?</label>
+                        <input type="text" class="form-control bg-dark text-light border-secondary" name="food" placeholder="Enter food">
+                    </div>
+                    <div id="weather-box" class="alert alert-info mb-3" style="background-color: #0a3d62; border: none; color: #e0e0e0;">
+                        Fetching weather...
+                    </div>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <div class="alert alert-success mt-2">{{msg}}</div>
+                        {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Log Reading</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleTimeBox(showBox) {
+        const container = document.getElementById('time_box_container');
+        const timeInput = document.getElementById('test_time');
+        if (showBox) {
+            container.classList.remove('hidden');
+            timeInput.required = true;
+        } else {
+            container.classList.add('hidden');
+            timeInput.required = false;
+            timeInput.value = '';
+        }
+    }
+    function getWeather() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            fetch(`/weather?lat=${lat}&lon=${lon}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('weather-box').innerHTML =
+                        `🌡️ ${data.city}: ${data.temp}°C, ${data.description} — ${data.advice}`;
+                });
+        });
+    }
+}
+getWeather();
+</script>
+{% endblock %}

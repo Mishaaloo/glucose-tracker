@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Last 7 Readings{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h3 style="color: #64ffda;">Last 7 Readings</h3>
+    <div class="card p-3 mt-3">
+    <div class="card p-3 mt-3 mb-4">
+    <form action="/last_readings" method="POST">
+        <div class="form-row align-items-end">
+            <div class="form-group col-md-4">
+                <label style="color: #64ffda;">From</label>
+                <input type="date" class="form-control bg-dark text-light border-secondary" name="start_date" value="{{ start_date or '' }}">
+            </div>
+            <div class="form-group col-md-4">
+                <label style="color: #64ffda;">To</label>
+                <input type="date" class="form-control bg-dark text-light border-secondary" name="end_date" value="{{ end_date or '' }}">
+            </div>
+            <div class="form-group col-md-2">
+                <button type="submit" class="btn btn-primary btn-block">Filter</button>
+            </div>
+            <div class="form-group col-md-2">
+                <a href="/last_readings" class="btn btn-outline-secondary btn-block">Reset</a>
+            </div>
+        </div>
+    </form>
+    <form action="/export_csv" method="POST" class="mt-2">
+        <input type="hidden" name="start_date" value="{{ start_date or '' }}">
+        <input type="hidden" name="end_date" value="{{ end_date or '' }}">
+        <button type="submit" class="btn btn-outline-success">Download as CSV</button>
+    </form>
+</div>
+        <table class="table table-striped">
+            <thead>
+              {% for r in readings %}
+<tr style="color: #e0e0e0;">
+    <td>{{ r.timestamp }}</td>
+    <td style="
+        {% if r.glucose < 70 %}
+            color: #ffc107; font-weight: bold;
+        {% elif r.glucose > 180 %}
+            color: #dc3545; font-weight: bold;
+        {% else %}
+            color: #28a745; font-weight: bold;
+        {% endif %}
+    ">{{ r.glucose }}</td>
+    <td>{{ r.insulin_type }}</td>
+    <td>{{ r.insulin_units }}</td>
+    <td>{{ r.food }}</td>
+    <td>
+        <form action="/delete_reading/{{ r.id }}" method="POST" onsubmit="return confirm('Delete this reading?')">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+    </td>
+</tr>
+{% endfor %}
+            </tbody>
+        </table>
+        {% if not readings %}
+            <p class="text-center" style="color: #64ffda;">No readings logged yet.</p>
+        {% endif %}
+    </div>
+</div>
+<div class="card p-3 mt-4">
+    <h5 style="color: #64ffda;">Glucose Trend</h5>
+    <canvas id="glucoseChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = [
+        {% for r in readings|reverse %}
+            "{{ r.timestamp }}",
+        {% endfor %}
+    ];
+
+    const data = [
+        {% for r in readings|reverse %}
+            {{ r.glucose }},
+        {% endfor %}
+    ];
+
+    const ctx = document.getElementById('glucoseChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Glucose (mg/dL)',
+                data: data,
+                borderColor: '#64ffda',
+                backgroundColor: 'rgba(100, 255, 218, 0.1)',
+                borderWidth: 2,
+                pointBackgroundColor: data.map(v =>
+                    v < 70 ? '#ffc107' : v > 180 ? '#dc3545' : '#28a745'
+                ),
+                pointRadius: 5,
+                tension: 0.3
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { labels: { color: '#e0e0e0' } },
+                annotation: {}
+            },
+            scales: {
+                x: { ticks: { color: '#e0e0e0' }, grid: { color: '#1e3a5f' } },
+                y: { ticks: { color: '#e0e0e0' }, grid: { color: '#1e3a5f' } }
+            }
+        }
+    });
+</script>
+{% endblock %}
