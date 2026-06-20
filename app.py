@@ -17,6 +17,10 @@ load_dotenv()
 
 app = Flask(__name__)
 
+@app.route('/')
+def root():
+    return redirect(url_for('login'))
+
 app.secret_key = os.getenv("SECRET_KEY")
 
 app.permanent_session_lifetime = timedelta(days=5)
