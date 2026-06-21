@@ -1,9 +1,9 @@
 # GlucoTracker
 *A Flask web app for tracking blood glucose readings, built for people living with T1D.*
 
-This app was essentially made for people with T1D (like myself). over years of living with this chronic condition, i learned that it was very helpful to 
+This app was essentially made for people with T1D (like myself). Over the years of living with this chronic condition, I learned that it was very helpful to 
 note down your readings to see the necessary improvements you need to make in the future for better treatement. 
-so i thought maybe we can turn this idea from an idea to functional application. first i made a personal CLI based program then i decided to decvelop the whole idea into a deployable full-stack web-app that people can access to. 
+so I thought maybe we can turn this idea from an idea to functional application. First I made a personal CLI based program then I decided to decvelop the whole idea into a deployable full-stack web-app that people can access to. 
 
 ## The web-app URL:
 https://glucose-tracker-zw2f.onrender.com/login
