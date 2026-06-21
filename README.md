@@ -10,24 +10,24 @@ https://glucose-tracker-zw2f.onrender.com/login
 Note: it may take 30 seconds to load since the app sleeps on inactivity on the free trial.
 
 ## Features:
-you can log in or register if you have no account.
-each user has their own data - no body else can see it.
-there's an AI analysis option to get feedback on your last readings.
-there's a real-time weather integration that warns you how temperature may affect your BG.
-there's a small "did you know?" box which tells you common diabetes knowledge.
-there's a chart based on your last readings data.
-you can also filter readings data and display it or convert it into a csv file to show your doctor.
-session based authentication with timeout.
+1. you can log in or register if you have no account.
+2. each user has their own data - no body else can see it.
+3. there's an AI analysis option to get feedback on your last readings.
+4. there's a real-time weather integration that warns you how temperature may affect your BG.
+5. there's a small "did you know?" box which tells you common diabetes knowledge.
+6. there's a chart based on your last readings data.
+7. you can also filter readings data and display it or convert it into a csv file to show your doctor.
+8. session based authentication with timeout.
 
 ## Tech Stack:
-Backend: Python, Flask
-Database: PostgreSQL (production), SQLite (local development) via SQLAlchemy
-Frontend: HTML, Bootstrap 4, custom CSS
-Data Visualization: Chart.js
-AI Integration: Groq API (Llama 3.3 70B)
-Weather Data: OpenWeatherMap API
-Authentication: Werkzeug password hashing
-Deployment: Render (web service + managed PostgreSQL)
+1. Backend: Python, Flask
+2. Database: PostgreSQL (production), SQLite (local development) via SQLAlchemy
+3. Frontend: HTML, Bootstrap 4, custom CSS
+4. Data Visualization: Chart.js
+5. AI Integration: Groq API (Llama 3.3 70B)
+6. Weather Data: OpenWeatherMap API
+7. Authentication: Werkzeug password hashing
+8. Deployment: Render (web service + managed PostgreSQL)
 
 Screenshots:
 <img width="1918" height="962" alt="Screenshot 2026-06-21 123109" src="https://github.com/user-attachments/assets/baeb59a1-d536-4bb0-9acb-dc34b124cc90" />
