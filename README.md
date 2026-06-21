@@ -9,14 +9,14 @@ https://glucose-tracker-zw2f.onrender.com/login
 Note: it may take 30 seconds to load since the app sleeps on inactivity on the free trial.
 
 ## Features:
-you can log in or register if you have no account
-each user has their own data - no body else can see it
-there's an AI analysis option to get feedback on your last readings
-there's a real-time weather integration that warns you how temperature may affect your BG
-there's a small "did you know?" box which tells you common diabetes knowledge
-there's a chart based on your last readings data
-you can also filter readings data and display it or convert it into a csv file to show your doctor
-session based authentication with timeout
+you can log in or register if you have no account.
+each user has their own data - no body else can see it.
+there's an AI analysis option to get feedback on your last readings.
+there's a real-time weather integration that warns you how temperature may affect your BG.
+there's a small "did you know?" box which tells you common diabetes knowledge.
+there's a chart based on your last readings data.
+you can also filter readings data and display it or convert it into a csv file to show your doctor.
+session based authentication with timeout.
 
 ## Tech Stack:
 Backend: Python, Flask
